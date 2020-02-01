@@ -9,7 +9,6 @@ class GraphGenerator(object):
             self.adjMatrix.append([0 for i in range(size)])
         self.size = size
         self.populate()
-        print("IM ALIVE")
 
     def addEdge(self, v1, v2):
         if v1 == v2:
