@@ -16,7 +16,6 @@ class GraphGenerator(object):
         
         self.adjMatrix[v1][v2] = 1
         self.adjMatrix[v2][v1] = 1
-        self.toString()
         
 
     def removeEdge(self, v1, v2):
@@ -40,8 +39,6 @@ class GraphGenerator(object):
                 rand = secrets.randbelow(self.size)
 
             self.addEdge(i,rand)
-        self.toString()
-        print(" ")
 
 
    #     while more == True:
