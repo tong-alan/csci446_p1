@@ -1,18 +1,8 @@
 import random as rand
-from abc import ABC, abstractmethod
 from GraphGenerator import GraphGenerator
 
 
-class Search(ABC):
-    
-    def three_color(self, g):
-        pass
-
-    def four_color(self, g):
-        pass
-
-
-class Backtracking(Search):
+class ForwardChecking(object):
     
     def __init__(self, graph):
         self.g = graph
@@ -24,7 +14,7 @@ class Backtracking(Search):
     #calls dfs with 4 colors
     def four_color(self, g):
         colors = [0] * g.size
-        colors = dfs(rand.randint(0,g.size), null, colors, 4)
+        colors = dfs(rand.randint(0,g.size), None, colors, 4)
         return colors
     
     #backtracking search to find coloring
@@ -49,7 +39,7 @@ class Backtracking(Search):
                     if g[start][i] == 1 and i != prev:
                         colors = self.dfs(i, start, colors, k)
 
-            if prev == null:
+            if prev == None:
                 return colors
 
             col += 1
