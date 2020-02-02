@@ -8,7 +8,7 @@ class Backtracking(object):
         for node in self.graph.nodeMatrix:
             print(node)
 
-    def isSafe(self, node, color, col):
+    def is_safe(self, node, color, col):
         for i in range(len(self.graph.nodeMatrix)):
             if self.graph.adjMatrix[node][i] == 1 and color[i] == col:
                 return False
