@@ -12,7 +12,6 @@ class GraphGenerator(object):
 
     def addEdge(self, v1, v2):
         if v1 == v2:
-            print("Same vertex %d and %d" % (v1, v2))
             return
         
         self.adjMatrix[v1][v2] = 1
@@ -21,7 +20,6 @@ class GraphGenerator(object):
 
     def removeEdge(self, v1, v2):
         if self.adjMatrix[v1][v2] == 0:
-            print("No edge between %d and %d" % (v1, v2))
             return
         self.adjMatrix[v1][v2] = 0
         self.adjMatrix[v2][v1] = 0
@@ -36,7 +34,7 @@ class GraphGenerator(object):
         #guarantees connected graph
         for i in range(self.size):
             rand = i
-            while rand == i and self.adjMatrix[i][rand] != 1:
+            while rand == i or self.adjMatrix[i][rand] == 1:
                 rand = secrets.randbelow(self.size)
 
             self.addEdge(i,rand)
@@ -62,7 +60,6 @@ class GraphGenerator(object):
    #         start = secrets.randbelow(self.size)
    #         self.addEdge(start, secrets.randbelow(self.size))
    #         more = self.checkPlanar(start)
-        return
 
 
     #check planarity w/ Euler's Theorem
@@ -110,6 +107,7 @@ class GraphGenerator(object):
 
     #    marked[start] = 2
     #    return self.faces
+
     
     #returns number of edges
     def countEdges(self):
