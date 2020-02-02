@@ -8,6 +8,7 @@ class GraphGenerator(object):
             self.adjMatrix.append([0 for i in range(size)])
         self.size = size
         self.populate()
+        self.nodeMatrix = self.convert_to_nodes()
 
     def addEdge(self, v1, v2):
         if v1 == v2:
@@ -39,6 +40,22 @@ class GraphGenerator(object):
                 rand = secrets.randbelow(self.size)
 
             self.addEdge(i,rand)
+
+    def convert_to_nodes(self):
+        matrix = [Node(i) for i in range(len(self.adjMatrix))]
+        for i, node in enumerate(self.adjMatrix):
+            for j, edges in enumerate(node):
+                if edges == 1:
+                    matrix[i].add_edges(matrix[j])
+        return matrix
+
+
+    def printNodes(self):
+        for node in self.nodeMatrix:
+            print(node)
+
+    def get_nodeMatrix(self):
+        return self.nodeMatrix
 
 
    #     while more == True:
@@ -106,7 +123,23 @@ class GraphGenerator(object):
         return self.size
 
         
-    def toString(self):
+    def printMatrix(self):
         for row in self.adjMatrix:
             print(row)
             print
+
+class Node(object):
+    def __init__(self, value):
+        self.value = value
+        self.edges = []
+        self.color = None
+
+    def add_edges(self, node):
+        self.edges.append(node)
+
+    def __str__(self):
+        nodes = ""
+        for edge in self.edges:
+            nodes += str(edge.value) + ", "
+        return "(Name) " + str(self.value) + ": (Edges) [" + nodes[:-2] + "]: (Color) " + str(self.color)
+
