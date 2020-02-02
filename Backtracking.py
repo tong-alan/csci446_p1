@@ -1,13 +1,16 @@
+# Class for Backtracking Algorithm
 class Backtracking(object):
     def __init__(self, graph, n_coloring):
         self.domain = [i for i in range(n_coloring)]
         self.graph = graph
         self.n = n_coloring
 
+    # Prints the Nodes
     def print(self):
         for node in self.graph.nodeMatrix:
             print(node)
 
+    # Checks if the coloring of the node is valid
     def is_safe(self, node, color, col):
         for i in range(len(self.graph.nodeMatrix)):
             if self.graph.adjMatrix[node][i] == 1 and color[i] == col:
@@ -25,8 +28,8 @@ class Backtracking(object):
         if node == len(self.graph.nodeMatrix):
             return True
 
-        for col in range(1, k + 1):
-            if self.isSafe(node, color, col):
+        for col in range(1, k+1):
+            if self.is_safe(node, color, col):
                 color[node] = col
                 self.graph.nodeMatrix[node].color = col
                 if self.recursive_backtracking(k, color, node + 1):
