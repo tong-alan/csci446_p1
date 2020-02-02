@@ -39,6 +39,7 @@ class GraphGenerator(object):
 
             self.addEdge(i,rand)
 
+
     def convert_to_nodes(self):
         matrix = [Node(i) for i in range(len(self.adjMatrix))]
         for i, node in enumerate(self.adjMatrix):
