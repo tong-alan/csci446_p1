@@ -1,48 +1,63 @@
 import random as rand
-from GraphGenerator import GraphGenerator
 
 
-class ForwardChecking(object):
-    
-    def __init__(self, graph):
-        self.g = graph
+class ArcConsistency(object):
+    def __init__(self, graph, n_coloring):
+        self.domain = [i for i in range(n_coloring)]
+        self.graph = graph
+        self.n = n_coloring
+        self.color = []
+        self.loop_var = 0
 
-    #calls dfs with 3 colors
-    def three_color(self, g):
-        return super().three_color(g)
+    # Prints the Nodes
+    def print(self):
+        print("Arc Consistency - Coloring: " + str(self.color))
 
-    #calls dfs with 4 colors
-    def four_color(self, g):
-        colors = [0] * g.size
-        colors = dfs(rand.randint(0,g.size), None, colors, 4)
-        return colors
-    
-    #backtracking search to find coloring
-    def dfs(self, start, prev, colors, k):
-        col = 1
-
-        #assigns color to vertex after checking for conflicts
-        while(col <= k):
-            works = True
-
-            #checks adjacent nodes for matching color
-            for i in range(g.size):
-                if g[start][i] == 1:
-                    if colors[i] == col:
-                        works = False
+    # makes sure each adjacent node has a possible value
+    def is_consistent(self, node, color, col):
+        if not self.is_safe(node, color, col):
+            return False
+        for i in range(len(self.graph.nodeMatrix)):
+            self.loop_var += 1
+            if self.graph.adjMatrix[node][i] is 1:
+                color[node] = col
+                consistent = False
+                for c in range(1, self.n + 1):
+                    self.loop_var += 1
+                    if self.is_safe(i, color, c):
+                        consistent = True
                         break
-            
-            if works == True:
-                colors[start] = col
+                color[node] = 0
+                if not consistent:
+                    return False
+        return True
 
-                for i in range(g.size):
-                    if g[start][i] == 1 and i != prev:
-                        colors = self.dfs(i, start, colors, k)
+    # Checks if the coloring of the node is valid
+    def is_safe(self, node, color, col):
+        for i in range(len(self.graph.nodeMatrix)):
+            self.loop_var += 1
+            if self.graph.adjMatrix[node][i] is 1 and color[i] is col:
+                return False
+        return True
 
-            if prev == None:
-                return colors
+    def backtracking(self):
+        color = [0] * len(self.graph.nodeMatrix)
+        if self.recursive_backtracking(self.n, color, 0) is None:
+            print("No Solution")
+            return False
+        print(self.loop_var)
+        return True
 
-            col += 1
-
-        return colors
-
+    def recursive_backtracking(self, k, color, node):
+        self.loop_var += 1
+        if node == len(self.graph.nodeMatrix):
+            return True
+        for col in range(1, k + 1):
+            self.loop_var += 1
+            if self.is_consistent(node, color, col):
+                color[node] = col
+                self.graph.nodeMatrix[node].color = col
+                self.color.append(col)
+                if self.recursive_backtracking(k, color, node + 1):
+                    return True
+                color[node] = 0
