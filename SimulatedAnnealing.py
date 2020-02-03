@@ -38,6 +38,9 @@ class SimulatedAnnealing(object):
     def get_current_coloring(self):
         return self.current
 
+    def get_current_fitness(self):
+        return self.calc_single_fitness(self.current)
+
 
     def simulate(self):
         original_coloring = self.random_start()
@@ -45,16 +48,10 @@ class SimulatedAnnealing(object):
 
         neighbor_coloring = self.find_neighbor()
         neighbor_fitness = self.calc_single_fitness(neighbor_coloring)
-        if original_fitness >= neighbor_fitness:
-            self.current = original_coloring
-
-
-
-
-
-
-
-
-
-
+        change = neighbor_fitness - self.get_current_fitness()
+        if change <= 0:
+            self.current = neighbor_coloring
+        else:
+            # set some probability, boltzmann distribution
+            pass
 
