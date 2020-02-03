@@ -28,7 +28,7 @@ class GA(object):
                 individual.fitness = self.calc_fitness()
 
     def calc_fitness(self):
-        num_conflicts = self.k
+        num_conflicts = 0
         for node in self.graph.nodeMatrix:
             for edge in node.edges:
                 if node.color == edge.color:

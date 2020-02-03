@@ -18,12 +18,23 @@ class SimulatedAnnealing(object):
     def find_neighbor(self):
         coloring = copy(self.current)
         index = random.randint(0, len(self.graph.nodeMatrix) - 1)
-        color = random.randint(1, self.k)
+
+        # Min Conflict Heuristic
+        min_conflict = []
+        for i in range(1,self.k+1):
+            self.graph.nodeMatrix[index].color = i
+            min_conflict.append(self.calc_fitness())
+        min_index = sorted(range(len(min_conflict)), key=lambda k: min_conflict[k])
+        for min_i in min_index:
+            if coloring[index] is not min_i:
+                color = min_i
+                break
+
         coloring[index] = color
         return coloring
 
     def calc_fitness(self):
-        num_conflicts = self.k
+        num_conflicts = 0
         for node in self.graph.nodeMatrix:
             for edge in node.edges:
                 if node.color == edge.color:
@@ -41,17 +52,22 @@ class SimulatedAnnealing(object):
     def get_current_fitness(self):
         return self.calc_single_fitness(self.current)
 
-
     def simulate(self):
         original_coloring = self.random_start()
         original_fitness = self.calc_single_fitness(original_coloring)
+        temp = 10000
+        while temp >= 0:
+            original_coloring = self.get_current_coloring()
+            original_fitness = self.get_current_fitness()
+            neighbor_coloring = self.find_neighbor()
+            neighbor_fitness = self.calc_single_fitness(neighbor_coloring)
+            change = neighbor_fitness - self.get_current_fitness()
+            if change <= 0:
+                self.current = neighbor_coloring
+            else:
+                pass
+            temp -= 1
 
-        neighbor_coloring = self.find_neighbor()
-        neighbor_fitness = self.calc_single_fitness(neighbor_coloring)
-        change = neighbor_fitness - self.get_current_fitness()
-        if change <= 0:
-            self.current = neighbor_coloring
-        else:
-            # set some probability, boltzmann distribution
-            pass
+        print(original_coloring, original_fitness)
+
 
