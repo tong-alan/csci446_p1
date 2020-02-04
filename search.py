@@ -1,6 +1,6 @@
 import random as rand
 
-
+# class implementing backtracking search that maintains arc consistency
 class ArcConsistency(object):
     def __init__(self, graph, n_coloring):
         self.domain = [i for i in range(n_coloring)]
@@ -43,6 +43,7 @@ class ArcConsistency(object):
                 return False
         return True
 
+    # initiates backtracking search
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
@@ -57,6 +58,7 @@ class ArcConsistency(object):
 
         return True
 
+    # variant on dfs to find coloring
     def recursive_backtracking(self, k, color, node):
         if node == len(self.graph.nodeMatrix):
             return True
@@ -72,6 +74,7 @@ class ArcConsistency(object):
                 # print("BACKTRACKS! " + str(color))
                 self.num_backtracks += 1
 
+# class implementing backtracking with forward checking
 class ForwardChecking(object):
     def __init__(self, graph, n_coloring):
         self.domain = [[] for i in range(graph.size)]
@@ -86,16 +89,17 @@ class ForwardChecking(object):
     def print(self):
         print("Forward Checking - Coloring: " + str(self.color))
 
+    # removes color of safe node from adjacent domains
     def forward_checking(self, node, color, col):
         for i in range(len(self.graph.nodeMatrix)):
             if self.graph.adjMatrix[node][i] is 1:
                 if color[i] is col:
                     return False
         if self.domain[node].count(col) > 0:
-
             self.domain[node].remove(col)
         return True
 
+    # initiates backtracking search
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
@@ -103,10 +107,10 @@ class ForwardChecking(object):
             return False
         return True
 
+    # variant on dfs to find coloring
     def recursive_backtracking(self, k, color, node):
         if node == len(self.graph.nodeMatrix):
             return True
-        print(self.domain[node])
         if len(self.domain[node]) != 0:
             for col in self.domain[node]:
                 if self.forward_checking(node, color, col):

@@ -1,6 +1,7 @@
 from GraphGenerator import GraphGenerator
 from Backtracking import Backtracking
 from GeneticAlgorithm import GA
+from search import ForwardChecking
 from search import ArcConsistency
 from SimulatedAnnealing import SimulatedAnnealing
 
@@ -8,14 +9,14 @@ from SimulatedAnnealing import SimulatedAnnealing
 
 def main():
     k_coloring = 4
-    nodes = 50
+    nodes = 4
 
     graph = GraphGenerator(nodes)
     print("SIMPLE BACKTRACKING")
+    graph = GraphGenerator(nodes)
     bt = Backtracking(graph, k_coloring)
     bt.backtracking()
     bt.print()
-
     print("=========================================================================")
     print("BACKTRACKING WITH ARC CONSISTENCY")
     ac = ArcConsistency(graph, k_coloring)
@@ -29,6 +30,11 @@ def main():
     print("SIMULATED ANNEALING")
     sa = SimulatedAnnealing(graph, k_coloring)
     sa.simulate()
+    print("=========================================================================")
+    print("FORWARD CHECKING")
+    fc = ForwardChecking(graph, k_coloring)
+    fc.backtracking()
+    fc.print()
 
 
 main()

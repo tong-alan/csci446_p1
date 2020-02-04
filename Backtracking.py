@@ -22,7 +22,7 @@ class Backtracking(object):
                 return False
         return True
 
-    # Initiates the backtracking algorithm
+    # Initiates backtracking search
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
@@ -34,7 +34,7 @@ class Backtracking(object):
         # print(self.num_backtracks)
         return True
 
-    # Recursively checks to move forward with the backtracking.
+    # Recursively checks to move forward with the backtracking. Variant on dfs to find coloring using recursion.
     def recursive_backtracking(self, k, color, node):
         if node == len(self.graph.nodeMatrix):
             return True
