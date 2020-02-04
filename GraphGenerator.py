@@ -1,6 +1,7 @@
 import secrets
 
 
+# Graph is represented with adjacency matrix
 class GraphGenerator(object):
     def __init__(self, size):
         self.faces = 1
@@ -11,6 +12,7 @@ class GraphGenerator(object):
         self.populate()
         self.nodeMatrix = self.convert_to_nodes()
 
+    # adds a new edge to the adjacency matrix
     def addEdge(self, v1, v2):
         if v1 == v2:
             return
@@ -32,7 +34,7 @@ class GraphGenerator(object):
         more = True
 
         # guarantees connected graph
-        for i in range(self.size + 10):
+        for i in range(self.size * 2):
             rand = i
             if rand >= self.size:
                 self.addEdge(secrets.randbelow(self.size), secrets.randbelow(self.size))
@@ -42,6 +44,7 @@ class GraphGenerator(object):
 
             self.addEdge(i, rand)
 
+    # creates nodes from adjacency matrix
     def convert_to_nodes(self):
         matrix = [Node(i) for i in range(len(self.adjMatrix))]
         for i, node in enumerate(self.adjMatrix):
@@ -56,57 +59,6 @@ class GraphGenerator(object):
 
     def get_nodeMatrix(self):
         return self.nodeMatrix
-
-    #     while more == True:
-    #         start = secrets.randbelow(self.size)
-    #         self.addEdge(start, secrets.randbelow(self.size))
-    #         more = self.checkPlanar(start)
-
-    # check planarity w/ Euler's Theorem
-    # def checkPlanar(self, start):
-    #    if self.countEdges == 0:
-    #        return True
-    #    marked = [0] * self.size
-    #    parent = [[]] * self.size
-    #    self.countFaces(-1, start, marked, parent)
-    #    edges = self.countEdges()
-    #    print(self.countFaces, self.countEdges, self.size)
-
-    #    #Euler's
-    #    if ((self.faces)-(edges)+(self.size)) == 2:
-    #        return True
-    #    else:
-    #        return False
-
-    ##count cycles w/ dfs
-    # def countFaces(self,prev, start, marked, parent):
-    #    print(start)
-    #    print(marked[start])
-    #    print(self.faces)
-    #    print(parent[start])
-    #    if marked[start]==2:
-    #        return self.faces
-
-    #    #vertex has been visited, so there must be a cycle
-    #    if marked == 1:
-    #        print("working!")
-    #        self.faces += 1
-    #        return self.faces
-    #    parent[start].append(prev)
-    #    print(prev)
-
-    #    marked[start] = 1
-
-    #    #add adjacent edges to stack
-    #    for i in range(0,self.size):
-    #        if self.adjMatrix[start][i] == 1 and prev != i and marked[i] != 2:
-    #            if parent[start].count(i) < 2:
-    #                self.faces = self.countFaces(start, i, marked, parent)
-    #        else:
-    #            continue
-
-    #    marked[start] = 2
-    #    return self.faces
 
     # returns number of edges
     def countEdges(self):
@@ -125,6 +77,7 @@ class GraphGenerator(object):
             print
 
 
+# node objects contain a list of adjacent nodes
 class Node(object):
     def __init__(self, value):
         self.value = value
