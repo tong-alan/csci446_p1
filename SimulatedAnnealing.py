@@ -68,6 +68,6 @@ class SimulatedAnnealing(object):
                 pass
             temp -= 1
 
-        print(original_coloring, original_fitness)
+        print("SA - Coloring: " + str(original_coloring) + " Fitness: " + str(original_fitness))
 
 

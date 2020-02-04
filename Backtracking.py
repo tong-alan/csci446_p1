@@ -8,7 +8,11 @@ class Backtracking(object):
 
     # Prints the Nodes
     def print(self):
-        print("Backtracking - Coloring: " + str(self.color))
+        # print("Backtracking - Coloring: " + str(self.color))
+        colors = []
+        for i in self.graph.nodeMatrix:
+            colors.append(i.color)
+        print("Backtracking - Color: " + str(colors))
 
     # Checks if the coloring of the node is valid
     def is_safe(self, node, color, col):
@@ -31,7 +35,6 @@ class Backtracking(object):
             if self.is_safe(node, color, col):
                 color[node] = col
                 self.graph.nodeMatrix[node].color = col
-                self.color.append(col)
                 if self.recursive_backtracking(k, color, node + 1):
                     return True
                 color[node] = 0

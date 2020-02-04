@@ -6,21 +6,22 @@ from SimulatedAnnealing import SimulatedAnnealing
 
 
 def main():
-    k_coloring = 4
-    nodes = 5
+    k_coloring = 3
+    nodes = 10
     #
     graph = GraphGenerator(nodes)
     #
-    # bt = Backtracking(graph, k_coloring)
-    # bt.backtracking()
-    # bt.print()
+    bt = Backtracking(graph, k_coloring)
+    bt.backtracking()
+    bt.print()
     #
     # ac = ArcConsistency(graph, k_coloring)
     # ac.backtracking()
     # ac.print()
     #
-    # ga = GA(graph, k_coloring)
-    # ga.train()
+    ga = GA(graph, k_coloring)
+    ga.train()
+
     sa = SimulatedAnnealing(graph, k_coloring)
     sa.simulate()
 
