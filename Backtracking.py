@@ -5,6 +5,7 @@ class Backtracking(object):
         self.graph = graph
         self.n = n_coloring
         self.color = []
+        self.num_backtracks = 0
 
     # Prints the Nodes
     def print(self):
@@ -24,8 +25,12 @@ class Backtracking(object):
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
+            print("--------------------------------------------------")
             print("No Solution")
+            # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
+        print("--------------------------------------------------")
+        # print(self.num_backtracks)
         return True
 
     def recursive_backtracking(self, k, color, node):
@@ -35,9 +40,12 @@ class Backtracking(object):
             if self.is_safe(node, color, col):
                 color[node] = col
                 self.graph.nodeMatrix[node].color = col
+                # print(color)
                 if self.recursive_backtracking(k, color, node + 1):
                     return True
                 color[node] = 0
+                # print("BACKTRACKS! " + str(color))
+                self.num_backtracks += 1
 
     # # Experiment with using a stack instead of recursion
     # def backtracking(self):

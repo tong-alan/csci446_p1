@@ -8,10 +8,14 @@ class ArcConsistency(object):
         self.n = n_coloring
         self.color = []
         self.loop_var = 0
+        self.num_backtracks = 0
 
     # Prints the Nodes
     def print(self):
-        print("Arc Consistency - Coloring: " + str(self.color))
+        colors = []
+        for i in self.graph.nodeMatrix:
+            colors.append(i.color)
+        print("Arc Consistency - Color: " + str(colors))
 
     # makes sure each adjacent node has a possible value
     def is_consistent(self, node, color, col):
@@ -28,6 +32,7 @@ class ArcConsistency(object):
                         consistent = True
                         break
                 color[node] = 0
+
                 if not consistent:
                     return False
         return True
@@ -43,9 +48,13 @@ class ArcConsistency(object):
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
+            print("--------------------------------------------------")
             print("No Solution")
+            # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
-        print(self.loop_var)
+        # print(self.loop_var)
+        print("--------------------------------------------------")
+        # print("Number of Backtracks: " + str(self.num_backtracks))
         return True
 
     def recursive_backtracking(self, k, color, node):
@@ -57,7 +66,10 @@ class ArcConsistency(object):
             if self.is_consistent(node, color, col):
                 color[node] = col
                 self.graph.nodeMatrix[node].color = col
+                # print(color)
                 self.color.append(col)
                 if self.recursive_backtracking(k, color, node + 1):
                     return True
                 color[node] = 0
+                # print("BACKTRACKS! " + str(color))
+                self.num_backtracks += 1

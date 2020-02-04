@@ -5,6 +5,12 @@ class GraphGenerator(object):
     def __init__(self, size):
         self.faces = 1
         self.adjMatrix = []
+        # self.adjMatrix = [
+        #     [0,1,1,1],
+        #     [1,0,1,1],
+        #     [1,1,0,1],
+        #     [1,1,1,0]
+        # ]
         for i in range(size):
             self.adjMatrix.append([0 for i in range(size)])
         self.size = size

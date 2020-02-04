@@ -1,5 +1,7 @@
 import random
 from copy import copy
+import math
+BOLTZMANN_CONSTANT = 1.3807 * 10**(-23)
 
 class SimulatedAnnealing(object):
     def __init__(self, graph, k_coloring):
@@ -19,16 +21,19 @@ class SimulatedAnnealing(object):
         coloring = copy(self.current)
         index = random.randint(0, len(self.graph.nodeMatrix) - 1)
 
-        # Min Conflict Heuristic
-        min_conflict = []
-        for i in range(1,self.k+1):
-            self.graph.nodeMatrix[index].color = i
-            min_conflict.append(self.calc_fitness())
-        min_index = sorted(range(len(min_conflict)), key=lambda k: min_conflict[k])
-        for min_i in min_index:
-            if coloring[index] is not min_i:
-                color = min_i
-                break
+        # # Min Conflict Heuristic
+        # min_conflict = []
+        # for i in range(1, self.k+1):
+        #     self.graph.nodeMatrix[index].color = i
+        #     min_conflict.append(self.calc_fitness())
+        # min_index = sorted(range(len(min_conflict)), key=lambda k: min_conflict[k])
+        # for min_i in min_index:
+        #     if coloring[index] is not min_i:
+        #         color = min_i+1
+        #         break
+
+        # Random Neighbor
+        color = random.randint(1, self.k)
 
         coloring[index] = color
         return coloring
@@ -52,22 +57,34 @@ class SimulatedAnnealing(object):
     def get_current_fitness(self):
         return self.calc_single_fitness(self.current)
 
+    def boltzmann_distribution(self):
+        pass
+
     def simulate(self):
         original_coloring = self.random_start()
         original_fitness = self.calc_single_fitness(original_coloring)
-        temp = 10000
+        temp = 1000
         while temp >= 0:
+            print("SA - Coloring: " + str(self.get_current_coloring()) + " Conflicts: " + str(
+                self.get_current_fitness() / 2))
             original_coloring = self.get_current_coloring()
             original_fitness = self.get_current_fitness()
             neighbor_coloring = self.find_neighbor()
             neighbor_fitness = self.calc_single_fitness(neighbor_coloring)
-            change = neighbor_fitness - self.get_current_fitness()
+            change = neighbor_fitness - original_fitness
             if change <= 0:
                 self.current = neighbor_coloring
             else:
-                pass
+                bolzmann_d = math.exp(- temp * change)
+                if flip(bolzmann_d):
+                    self.current = neighbor_coloring
+                else:
+                    self.current = original_coloring
             temp -= 1
+        print("Global \"Minimum\"")
+        print("Temperature: " + str(temp+1))
+        print("SA - Coloring: " + str(original_coloring) + " Conflicts: " + str(original_fitness/2))
 
-        print("SA - Coloring: " + str(original_coloring) + " Fitness: " + str(original_fitness))
-
-
+# Coin simulation based on a probability.
+def flip(prob):
+    return True if random.random() < prob else False

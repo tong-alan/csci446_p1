@@ -84,14 +84,20 @@ class GA(object):
     def train(self):
         fitness_history = []
         global_best_individual = self.population[0]
+        generation = 0
         while True:
             parents = self.parent_selection()
             offspring = self.offspring(parents)
             self.recombine(offspring)
+            generation += 1
+            # for i in offspring:
+                # print("GA - " + str(i))
+            # print("GENERATION: " + str(generation))
             for individual in self.population:
                 if global_best_individual.fitness > individual.fitness:
                     global_best_individual = individual
                 fitness_history.append(individual.fitness)
+
 
             if len(fitness_history) > CONVERGENCE_SIZE * 2:
                 fitness_history.pop(0)
@@ -113,6 +119,6 @@ class Individual(object):
         self.fitness = None
 
     def __str__(self):
-        return "Coloring: " + str(self.coloring) + " Fitness: " + str(self.fitness)
+        return "Coloring: " + str(self.coloring) + " Fitness: " + str(self.fitness/2)
 
 
