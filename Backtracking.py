@@ -22,6 +22,7 @@ class Backtracking(object):
                 return False
         return True
 
+    # Initiates the backtracking algorithm
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
@@ -33,34 +34,20 @@ class Backtracking(object):
         # print(self.num_backtracks)
         return True
 
+    # Recursively checks to move forward with the backtracking.
     def recursive_backtracking(self, k, color, node):
         if node == len(self.graph.nodeMatrix):
             return True
         for col in range(1, k+1):
             if self.is_safe(node, color, col):
+                # If the coloring is safe, we will assign that color to the node.
                 color[node] = col
                 self.graph.nodeMatrix[node].color = col
                 # print(color)
                 if self.recursive_backtracking(k, color, node + 1):
                     return True
                 color[node] = 0
+                # Here we will backtrack to our previous recursive function to adjust our previous colorings.
                 # print("BACKTRACKS! " + str(color))
                 self.num_backtracks += 1
 
-    # # Experiment with using a stack instead of recursion
-    # def backtracking(self):
-    #     stack = [self.graph.nodeMatrix[0]]
-    #     color = [1, 2, 3, 4]
-    #     while len(stack) != 0:
-    #         current_node = stack[-1]
-    #         for i in color:
-    #             if self.isSafe(current_node, i):
-    #                 current_node.color = i
-    #                 if any(edge.color is None for edge in current_node.edges):
-    #                     for edge_node in current_node.edges:
-    #                         if edge_node.color is None:
-    #                             next_node = edge_node
-    #                             stack.append(next_node)
-    #                             break
-    #                 else:
-    #                     stack.pop()

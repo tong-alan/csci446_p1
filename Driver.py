@@ -4,6 +4,7 @@ from GeneticAlgorithm import GA
 from search import ArcConsistency
 from SimulatedAnnealing import SimulatedAnnealing
 
+# Entry point for our program. Here we simulate all 5 of our algorithms.
 
 def main():
     k_coloring = 4

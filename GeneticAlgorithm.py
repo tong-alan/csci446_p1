@@ -1,10 +1,12 @@
 import random
 
+# Tunable Parameters, we found this to yield the best results
 POPULATION_SIZE = 100
 CONVERGENCE_SIZE = 5000
 CONVERGENCE_THRESHOLD = 0.01
 
 
+# Genetic Algorithm for Graph Coloring
 class GA(object):
     def __init__(self, graph, k):
         self.graph = graph
@@ -13,6 +15,7 @@ class GA(object):
         self.evaluate_fitness()
         self.most_fit = None
 
+    # Randomly creates individual from the population
     def create_initial_population(self):
         population = []
         for i in range(POPULATION_SIZE):
@@ -20,6 +23,7 @@ class GA(object):
             population.append(Individual(coloring))
         return population
 
+    # Assigns a fitness score to all members of the population
     def evaluate_fitness(self):
         num_nodes = len(self.graph.nodeMatrix)
         for individual in self.population:
@@ -27,6 +31,7 @@ class GA(object):
                 self.graph.nodeMatrix[i].color = individual.coloring[i]
                 individual.fitness = self.calc_fitness()
 
+    # Fitness function that returns the number of conflicts in the graph based on the coloring currently in the graph
     def calc_fitness(self):
         num_conflicts = 0
         for node in self.graph.nodeMatrix:
@@ -35,17 +40,20 @@ class GA(object):
                     num_conflicts += 1
         return num_conflicts
 
+    # Calculates a single fitness for a given vector/coloring
     def calc_single_fitness(self, vector):
         for i, node in enumerate(self.graph.nodeMatrix):
             self.graph.nodeMatrix[i].color = vector[i]
         return self.calc_fitness()
 
+    # Selects our mating pool
     def parent_selection(self):
         # Tournament Selection
         selected_individuals = []
         for i in range(POPULATION_SIZE):
             parent_one = self.population[random.randint(0, POPULATION_SIZE-1)]
             parent_two = self.population[random.randint(0, POPULATION_SIZE-1)]
+            # Minimizing the fitness
             if parent_one.fitness < parent_two.fitness:
                 selected_individuals.append(parent_one)
             else:
@@ -53,8 +61,10 @@ class GA(object):
         return selected_individuals
 
     def recombine(self, new_population):
+        # Generational Replacement
         self.population = new_population
 
+    # Binomial Crossover, input two parents will result in an output of two offspring
     def crossover(self, parent_one, parent_two):
         child_a = []
         child_b = []
@@ -73,6 +83,7 @@ class GA(object):
         child_two.fitness = fitness_two
         return child_one, child_two
 
+    # Create offspring population based on parent population
     def offspring(self, parents):
         offspring = []
         for i in range(0,len(self.population),2):
@@ -81,6 +92,7 @@ class GA(object):
             offspring.append(offspring_two)
         return offspring
 
+    # Simulates the genetic algorithm
     def train(self):
         fitness_history = []
         global_best_individual = self.population[0]
@@ -93,12 +105,13 @@ class GA(object):
             # for i in offspring:
                 # print("GA - " + str(i))
             # print("GENERATION: " + str(generation))
+            # We keep track of the global best individual we have seen so far.
             for individual in self.population:
                 if global_best_individual.fitness > individual.fitness:
                     global_best_individual = individual
                 fitness_history.append(individual.fitness)
-
-
+            # Convergence testing. If the fitness improves by only our CONVERGENCE_THRESHOLD, then we terminate the
+            # algorithm.
             if len(fitness_history) > CONVERGENCE_SIZE * 2:
                 fitness_history.pop(0)
                 older_fitness = sum(fitness_history[:CONVERGENCE_SIZE])
@@ -113,6 +126,7 @@ def flip(prob):
     return True if random.random() < prob else False
 
 
+# Individual class to aid our genetic algorithm process.
 class Individual(object):
     def __init__(self, coloring):
         self.coloring = coloring

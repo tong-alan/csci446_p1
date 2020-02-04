@@ -1,10 +1,12 @@
 import secrets
 
+# Graph Generator Class. Creates an adjacency matrix and planar graph for our algorithms.
 
 class GraphGenerator(object):
     def __init__(self, size):
         self.faces = 1
         self.adjMatrix = []
+        # Used for testing.
         # self.adjMatrix = [
         #     [0,1,1,1],
         #     [1,0,1,1],
@@ -15,6 +17,7 @@ class GraphGenerator(object):
             self.adjMatrix.append([0 for i in range(size)])
         self.size = size
         self.populate()
+        # Convert the adjacency matrix to node based edges rather than just 1 to represent an edge.
         self.nodeMatrix = self.convert_to_nodes()
 
     def addEdge(self, v1, v2):
@@ -24,7 +27,7 @@ class GraphGenerator(object):
         self.adjMatrix[v1][v2] = 1
         self.adjMatrix[v2][v1] = 1
 
-    def removeEdge(self, v1, v2):
+    def removedge(self, v1, v2):
         if self.adjMatrix[v1][v2] == 0:
             return
         self.adjMatrix[v1][v2] = 0
@@ -48,6 +51,7 @@ class GraphGenerator(object):
 
             self.addEdge(i, rand)
 
+    # Creates a node based equivalent of the adjacency matrix for easier modification to the coloring assignments
     def convert_to_nodes(self):
         matrix = [Node(i) for i in range(len(self.adjMatrix))]
         for i, node in enumerate(self.adjMatrix):
@@ -56,10 +60,12 @@ class GraphGenerator(object):
                     matrix[i].add_edges(matrix[j])
         return matrix
 
+    # Prints the graph, node-based
     def printNodes(self):
         for node in self.nodeMatrix:
             print(node)
 
+    # Returns the node matrix.
     def get_nodeMatrix(self):
         return self.nodeMatrix
 
@@ -130,7 +136,8 @@ class GraphGenerator(object):
             print(row)
             print
 
-
+# Node class for our node matrix. A node will hold a value, which will be the name of the Node, list of Nodes that
+# represents the edges, and the color of that node, originally set to none.
 class Node(object):
     def __init__(self, value):
         self.value = value
