@@ -26,11 +26,9 @@ class Backtracking(object):
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
-            print("--------------------------------------------------")
             print("No Solution")
             # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
-        print("--------------------------------------------------")
         # print(self.num_backtracks)
         return True
 

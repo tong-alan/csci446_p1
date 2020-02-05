@@ -103,7 +103,7 @@ class GA(object):
             self.recombine(offspring)
             generation += 1
             # for i in offspring:
-                # print("GA - " + str(i))
+            #     print("GA - " + str(i))
             # print("GENERATION: " + str(generation))
             # We keep track of the global best individual we have seen so far.
             for individual in self.population:

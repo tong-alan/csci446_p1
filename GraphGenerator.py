@@ -9,7 +9,7 @@ class GraphGenerator(object):
         self.adjMatrix = []
         # Used for testing.
         # self.adjMatrix = [
-        #     [0,1,1,1],
+        #      [0,1,1,1],
         #     [1,0,1,1],
         #     [1,1,0,1],
         #     [1,1,1,0]
@@ -22,6 +22,12 @@ class GraphGenerator(object):
         self.nodeMatrix = self.convert_to_nodes()
 
     # adds a new edge to the adjacency matrix
+    def printAJ(self):
+        print("Adjacency Matrix")
+        for i in self.adjMatrix:
+            print(i)
+        print()
+
     def addEdge(self, v1, v2):
         if v1 == v2:
             return

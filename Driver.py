@@ -9,11 +9,11 @@ from SimulatedAnnealing import SimulatedAnnealing
 
 def main():
     k_coloring = 4
-    nodes = 4
+    nodes = 20
 
     graph = GraphGenerator(nodes)
+    graph.printAJ()
     print("SIMPLE BACKTRACKING")
-    graph = GraphGenerator(nodes)
     bt = Backtracking(graph, k_coloring)
     bt.backtracking()
     bt.print()
@@ -23,6 +23,11 @@ def main():
     ac.backtracking()
     ac.print()
     print("=========================================================================")
+    print("FORWARD CHECKING")
+    fc = ForwardChecking(graph, k_coloring)
+    fc.backtracking()
+    fc.print()
+    print("=========================================================================")
     print("GENETIC ALGORITHM")
     ga = GA(graph, k_coloring)
     ga.train()
@@ -30,11 +35,7 @@ def main():
     print("SIMULATED ANNEALING")
     sa = SimulatedAnnealing(graph, k_coloring)
     sa.simulate()
-    print("=========================================================================")
-    print("FORWARD CHECKING")
-    fc = ForwardChecking(graph, k_coloring)
-    fc.backtracking()
-    fc.print()
+
 
 
 main()

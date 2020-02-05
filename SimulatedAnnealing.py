@@ -73,7 +73,7 @@ class SimulatedAnnealing(object):
         temp = TEMPERATURE
         while temp >= 0:
             # print("SA - Coloring: " + str(self.get_current_coloring()) + " Conflicts: " + str(
-            #     self.get_current_fitness() / 2))
+            #      self.get_current_fitness() / 2))
             original_coloring = self.get_current_coloring()
             original_fitness = self.get_current_fitness()
             neighbor_coloring = self.find_neighbor()

@@ -47,13 +47,11 @@ class ArcConsistency(object):
     def backtracking(self):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
-            print("--------------------------------------------------")
             print("No Solution")
             # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
 
         # print(self.loop_var)
-        print("--------------------------------------------------")
         # print("Number of Backtracks: " + str(self.num_backtracks))
 
         return True
@@ -84,10 +82,14 @@ class ForwardChecking(object):
         self.graph = graph
         self.n = n_coloring
         self.color = []
+        self.num_backtracks = 0
 
     # Prints the Nodes
     def print(self):
-        print("Forward Checking - Coloring: " + str(self.color))
+        colors = []
+        for i in self.graph.nodeMatrix:
+            colors.append(i.color)
+        print("Forward Checking - Coloring: " + str(colors))
 
     # removes color of safe node from adjacent domains
     def forward_checking(self, node, color, col):
@@ -104,7 +106,9 @@ class ForwardChecking(object):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
             print("No Solution")
+            # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
+        # print("Number of Backtracks: " + str(self.num_backtracks))
         return True
 
     # variant on dfs to find coloring
@@ -116,8 +120,11 @@ class ForwardChecking(object):
                 if self.forward_checking(node, color, col):
                     color[node] = col
                     self.graph.nodeMatrix[node].color = col
+                    # print(color)
                     self.color.append(col)
                     if self.recursive_backtracking(k, color, node + 1):
                         return True
                     color[node] = 0
+                    # print("BACKTRACKS! " + str(color))
+                    self.num_backtracks += 1
 
