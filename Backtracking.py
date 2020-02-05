@@ -27,9 +27,7 @@ class Backtracking(object):
         color = [0] * len(self.graph.nodeMatrix)
         if self.recursive_backtracking(self.n, color, 0) is None:
             print("No Solution")
-            # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
-        # print(self.num_backtracks)
         return True
 
     # Recursively checks to move forward with the backtracking. Variant on dfs to find coloring using recursion.
@@ -41,11 +39,8 @@ class Backtracking(object):
                 # If the coloring is safe, we will assign that color to the node.
                 color[node] = col
                 self.graph.nodeMatrix[node].color = col
-                # print(color)
                 if self.recursive_backtracking(k, color, node + 1):
                     return True
                 color[node] = 0
                 # Here we will backtrack to our previous recursive function to adjust our previous colorings.
-                # print("BACKTRACKS! " + str(color))
                 self.num_backtracks += 1
-

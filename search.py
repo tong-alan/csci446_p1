@@ -10,7 +10,6 @@ class ArcConsistency(object):
         self.loop_var = 0
         self.num_backtracks = 0
 
-
     # Prints the Nodes
     def print(self):
         colors = []
@@ -50,10 +49,6 @@ class ArcConsistency(object):
             print("No Solution")
             # print("Number of Backtracks: " + str(self.num_backtracks))
             return False
-
-        # print(self.loop_var)
-        # print("Number of Backtracks: " + str(self.num_backtracks))
-
         return True
 
     # variant on dfs to find coloring
@@ -69,8 +64,8 @@ class ArcConsistency(object):
                 if self.recursive_backtracking(k, color, node + 1):
                     return True
                 color[node] = 0
-                # print("BACKTRACKS! " + str(color))
                 self.num_backtracks += 1
+
 
 # class implementing backtracking with forward checking
 class ForwardChecking(object):
@@ -127,4 +122,3 @@ class ForwardChecking(object):
                     color[node] = 0
                     # print("BACKTRACKS! " + str(color))
                     self.num_backtracks += 1
-

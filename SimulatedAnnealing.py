@@ -26,17 +26,6 @@ class SimulatedAnnealing(object):
         coloring = copy(self.current)
         index = random.randint(0, len(self.graph.nodeMatrix) - 1)
 
-        # # Min Conflict Heuristic
-        # min_conflict = []
-        # for i in range(1, self.k+1):
-        #     self.graph.nodeMatrix[index].color = i
-        #     min_conflict.append(self.calc_fitness())
-        # min_index = sorted(range(len(min_conflict)), key=lambda k: min_conflict[k])
-        # for min_i in min_index:
-        #     if coloring[index] is not min_i:
-        #         color = min_i+1
-        #         break
-
         # Random Neighbor
         color = random.randint(1, self.k)
 
@@ -91,8 +80,6 @@ class SimulatedAnnealing(object):
                     self.current = original_coloring
             # Schedule of our simulated annealing algorithm.
             temp -= 1
-        print("Global \"Minimum\"")
-        print("Temperature: " + str(temp+1))
         print("SA - Coloring: " + str(original_coloring) + " Conflicts: " + str(original_fitness/2))
 
 

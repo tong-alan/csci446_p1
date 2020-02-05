@@ -1,19 +1,12 @@
 import secrets
 
-# Graph Generator Class. Creates an adjacency matrix and planar graph for our algorithms.
 
+# Graph Generator Class. Creates an adjacency matrix and planar graph for our algorithms.
 # Graph is represented with adjacency matrix
 class GraphGenerator(object):
     def __init__(self, size):
         self.faces = 1
         self.adjMatrix = []
-        # Used for testing.
-        # self.adjMatrix = [
-        #      [0,1,1,1],
-        #     [1,0,1,1],
-        #     [1,1,0,1],
-        #     [1,1,1,0]
-        # ]
         for i in range(size):
             self.adjMatrix.append([0 for i in range(size)])
         self.size = size
@@ -47,7 +40,6 @@ class GraphGenerator(object):
     # randomly populates graph with edges
     def populate(self):
         more = True
-
         # guarantees connected graph
         for i in range(self.size * 2):
             rand = i
@@ -92,6 +84,7 @@ class GraphGenerator(object):
         for row in self.adjMatrix:
             print(row)
             print
+
 
 # Node class for our node matrix. A node will hold a value, which will be the name of the Node, list of Nodes that
 # represents the edges, and the color of that node, originally set to none.

@@ -9,10 +9,11 @@ from SimulatedAnnealing import SimulatedAnnealing
 
 def main():
     k_coloring = 4
-    nodes = 20
+    nodes = 10
 
     graph = GraphGenerator(nodes)
     graph.printAJ()
+
     print("SIMPLE BACKTRACKING")
     bt = Backtracking(graph, k_coloring)
     bt.backtracking()
@@ -35,7 +36,6 @@ def main():
     print("SIMULATED ANNEALING")
     sa = SimulatedAnnealing(graph, k_coloring)
     sa.simulate()
-
 
 
 main()
