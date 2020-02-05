@@ -1,0 +1,2 @@
+Alan T - Backtracking, Genetic Algorithm, Simulated Annealing, Paper, Video
+Logan G - Graph Generator, Arc Consistency, Forward Checking, Paper
